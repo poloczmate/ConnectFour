@@ -66,11 +66,27 @@ public class Main extends Application {
             setText("");
             getChildren().addAll(r,text);
             setOnMouseClicked(event->{
-                //todo
                 if (!nextPlayer.equals("")){
-                    if (!hasWinner()){
-
-                    }else printMsg(nextPlayer + " has won!");
+                    if (checkColumn(col) != 10){
+                        if (!hasWinner()){
+                            if (!isDraw()){
+                                Map[(int) checkColumn(col)][(int) col].setText(nextPlayer);
+                                if (hasWinner()){
+                                    printMsg(nextPlayer+ " has won! Start a new game with restart button!");
+                                    nextPlayer = "";
+                                }else{
+                                    if (nextPlayer.equals("X")) nextPlayer="O";
+                                    else if(nextPlayer.equals("O")) nextPlayer = "X";
+                                    printMsg(nextPlayer+"'s turn!");
+                                }
+                            }else{
+                                printMsg("The game is a draw, start a new game with the restart button!");
+                            }
+                        }else {
+                            printMsg(nextPlayer+ " has won! Start a new game with restart button!");
+                            nextPlayer = "";
+                        }
+                    }else printMsg("The column is already full! " + nextPlayer +"'s turn!");
                 }else printMsg("The game is already over!");
             });
         }
@@ -95,11 +111,13 @@ public class Main extends Application {
         public boolean hasWinner(){
             for (int i = 0; i < 6; i++){
                 for (int j = 0; j < 7; j++){
-                    if (i < 2){
+                    if (i < 3){
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i+1][j].getText().equals(nextPlayer)
                                 && Map[i+2][j].getText().equals(nextPlayer)
-                                && Map[i+3][j].getText().equals(nextPlayer)) return true;
+                                && Map[i+3][j].getText().equals(nextPlayer)){
+                            return true;
+                        }
                     }
                     if (j < 3){
                         if (Map[i][j].getText().equals(nextPlayer)
@@ -107,7 +125,7 @@ public class Main extends Application {
                                 && Map[i][j+2].getText().equals(nextPlayer)
                                 && Map[i][j+3].getText().equals(nextPlayer)) return true;
                     }
-                    if (j < 3 && i < 5){
+                    if (j < 3 && i < 3){
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i+1][j+1].getText().equals(nextPlayer)
                                 && Map[i+2][j+2].getText().equals(nextPlayer)
@@ -122,6 +140,13 @@ public class Main extends Application {
                 }
             }
             return false;
+        }
+
+        public double checkColumn(double col){
+            for (int i = 5; i >= 0;i--){
+                if (Map[i][(int)col].getText().equals("")) return (double)i;
+            }
+            return 10;
         }
     }
 
