@@ -19,8 +19,8 @@ import java.util.Map;
 
 public class Main extends Application {
     private String nextPlayer = "X";
-    private MapElement msgLabel = new MapElement(1400,50,30);
-    private MapElement[][] Map = new MapElement[6][7];
+    //initalize with bigger row,col than other MapElements
+    private MapElement msgLabel = new MapElement(700,50,30,8,8);
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -31,7 +31,14 @@ public class Main extends Application {
         gp.add(msgLabel,0,0,7,1);
         //create and add MapElements
         for (int i = 0; i < 6; i++){
-            //MapElement m1 = new MapElement()
+            MapElement m1 = new MapElement(100,100,72,i,0);
+            MapElement m2 = new MapElement(100,100,72,i,1);
+            MapElement m3 = new MapElement(100,100,72,i,2);
+            MapElement m4 = new MapElement(100,100,72,i,3);
+            MapElement m5 = new MapElement(100,100,72,i,4);
+            MapElement m6 = new MapElement(100,100,72,i,5);
+            MapElement m7 = new MapElement(100,100,72,i,6);
+            gp.addRow(i+2,m1,m2,m3,m4,m5,m6,m7);
         }
 
         Scene scene = new Scene(gp);
@@ -42,11 +49,14 @@ public class Main extends Application {
 
     private class MapElement extends StackPane{
         private Text text = new Text("");
-        public MapElement(double i, double j, double textSize){
+        private double row;
+        private double col;
+        public MapElement(double i, double j, double textSize, double row, double col){
             Rectangle r = new Rectangle(i ,j);
             r.setFill(null);
             r.setStroke(Color.BLACK);
             text.setFont(Font.font(textSize));
+            setText("");
             getChildren().addAll(r,text);
         }
         public void setText(String s){
