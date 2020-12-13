@@ -66,7 +66,12 @@ public class Main extends Application {
             setText("");
             getChildren().addAll(r,text);
             setOnMouseClicked(event->{
+                //todo
+                if (!nextPlayer.equals("")){
+                    if (!hasWinner()){
 
+                    }else printMsg(nextPlayer + " has won!");
+                }else printMsg("The game is already over!");
             });
         }
         public void setText(String s){
