@@ -1,10 +1,14 @@
 package sample;
 
+import com.sun.javafx.collections.MappingChange;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -48,10 +52,25 @@ public class Main extends Application {
             Map[i][5] = m6;
             Map[i][6] = m7;
         }
+        Button button = new Button("Restart");
+        button.setMinSize(75,50);
+        button.setFont(Font.font(15));
+        gp.addRow(8,button);
         Scene scene = new Scene(gp);
         primaryStage.setScene(scene);
         primaryStage.setTitle("ConnectFour");
         primaryStage.show();
+
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                for (int i = 0; i < 6; i++){
+                    for (int j = 0; j < 7; j++) Map[i][j].setText("");
+                }
+                nextPlayer = "X";
+                msgLabel.setText(nextPlayer + "'s turn!");
+            }
+        });
     }
 
     private class MapElement extends StackPane{
