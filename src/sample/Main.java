@@ -22,6 +22,7 @@ import java.util.Map;
 
 
 public class Main extends Application {
+    //Damir
     private String nextPlayer = "X";
     //initalize with bigger row,col than other MapElements
     private MapElement msgLabel = new MapElement(700,50,30,8);
@@ -72,7 +73,8 @@ public class Main extends Application {
             }
         });
     }
-
+    //END DAMIR
+    //GUDNI
     private class MapElement extends StackPane{
         private Text text = new Text("");
         private double row;
@@ -109,6 +111,9 @@ public class Main extends Application {
                 }else printMsg("The game is already over!");
             });
         }
+    //END GUDNI
+        //STANLEY
+
         public void setText(String s){
             text.setText(s);
         }
@@ -168,7 +173,7 @@ public class Main extends Application {
             return 10;
         }
     }
-
+    //END STANLEY
 
     public static void main(String[] args) {
         launch(args);
