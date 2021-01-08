@@ -87,11 +87,11 @@ public class Main extends Application {
             setText("");
             getChildren().addAll(r,text);
             setOnMouseClicked(event->{
-                if (!nextPlayer.equals("")){
-                    if (checkColumn(col) != 10){
-                        if (!hasWinner()){
-                            if (!isDraw()){
-                                Map[(int) checkColumn(col)][(int) col].setText(nextPlayer);
+                if (!nextPlayer.equals("")){ // if "" the game has ended
+                    if (checkColumn(col) != 10){ //if 10 the column is full
+                        if (!hasWinner()){ //check winner
+                            if (!isDraw()){ //check table full
+                                Map[(int) checkColumn(col)][(int) col].setText(nextPlayer); //do the step
                                 if (hasWinner()){
                                     printMsg(nextPlayer+ " has won! Start a new game with restart button!");
                                     nextPlayer = "";
@@ -118,10 +118,10 @@ public class Main extends Application {
         public String getText(){
             return text.getText();
         }
-        public void printMsg(String s){
+        public void printMsg(String s){ //set message at the top of the window
             msgLabel.setText(s);
         }
-        public boolean isDraw(){
+        public boolean isDraw(){ // check the table is full
             for (int i = 0; i < 6; i++){
                 for (int j = 0; j < 7; j++){
                     if (Map[i][j].getText().equals("")) return false;
@@ -130,7 +130,7 @@ public class Main extends Application {
             return true;
         }
 
-        public boolean hasWinner(){
+        public boolean hasWinner(){ // check winner
             for (int i = 0; i < 6; i++){
                 for (int j = 0; j < 7; j++){
                     if (i < 3){
@@ -164,7 +164,7 @@ public class Main extends Application {
             return false;
         }
 
-        public double checkColumn(double col){
+        public double checkColumn(double col){ //check column
             for (int i = 5; i >= 0;i--){
                 if (Map[i][(int)col].getText().equals("")) return (double)i;
             }
