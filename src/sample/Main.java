@@ -29,7 +29,7 @@ public class Main extends Application {
     private MapElement[][] Map = new MapElement[6][7];
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage){
         GridPane gp = new GridPane();
         //set and add Message Box
         msgLabel.setText("X's turn!");
@@ -77,8 +77,6 @@ public class Main extends Application {
 
     private class MapElement extends StackPane{
         private Text text = new Text("");
-        private double row;
-        private double col;
         public MapElement(double i, double j, double textSize, double col){
             Rectangle r = new Rectangle(i ,j);
             r.setFill(null);
@@ -141,19 +139,19 @@ public class Main extends Application {
                             return true;
                         }
                     }
-                    if (j < 3){
+                    if (j < 4){
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i][j+1].getText().equals(nextPlayer)
                                 && Map[i][j+2].getText().equals(nextPlayer)
                                 && Map[i][j+3].getText().equals(nextPlayer)) return true;
                     }
-                    if (j < 3 && i < 3){
+                    if (j < 4 && i < 3){
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i+1][j+1].getText().equals(nextPlayer)
                                 && Map[i+2][j+2].getText().equals(nextPlayer)
                                 && Map[i+3][j+3].getText().equals(nextPlayer)) return true;
                     }
-                    if (j < 3 && i > 2){
+                    if (j < 4 && i > 2){
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i-1][j+1].getText().equals(nextPlayer)
                                 && Map[i-2][j+2].getText().equals(nextPlayer)
@@ -166,7 +164,7 @@ public class Main extends Application {
 
         public double checkColumn(double col){ //check column
             for (int i = 5; i >= 0;i--){
-                if (Map[i][(int)col].getText().equals("")) return (double)i;
+                if (Map[i][(int)col].getText().equals("")) return i;
             }
             return 10;
         }
