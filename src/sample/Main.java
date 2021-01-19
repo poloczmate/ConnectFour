@@ -1,15 +1,11 @@
 package sample;
 
-import com.sun.javafx.collections.MappingChange;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -18,22 +14,25 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.util.Map;
 
 
 public class Main extends Application {
-
+    //zeigt wer die nächste kein
     private String nextPlayer = "X";
-    //initalize with bigger row,col than other MapElements
+    //initalize with bigger size than other MapElements
     private MapElement msgLabel = new MapElement(700,50,30,8);
     private MapElement[][] Map = new MapElement[6][7];
 
+    //Damir start
     @Override
     public void start(Stage primaryStage){
+        //gier beginnt den Programm
+        //eine leere Gridpane machem (ähnlich wie ein Tabelle)
         GridPane gp = new GridPane();
         //set and add Message Box
         msgLabel.setText("X's turn!");
         msgLabel.setAlignment(Pos.CENTER);
+        //add Messagebox to the Gridpane
         gp.add(msgLabel,0,0,7,1);
         //create and add MapElements
         for (int i = 0; i < 6; i++){
@@ -55,10 +54,15 @@ public class Main extends Application {
         }
         //add new Button to restart the game
         Button button = new Button("Restart");
+        //größe
         button.setMinSize(75,50);
+        //textgröße
         button.setFont(Font.font(15));
+        //zur Gridpane hinfügen
         gp.addRow(8,button);
+        //Scene machen
         Scene scene = new Scene(gp);
+        //Scene einstellen
         primaryStage.setScene(scene);
         primaryStage.setTitle("ConnectFour");
         primaryStage.show();
@@ -74,15 +78,20 @@ public class Main extends Application {
             }
         });
     }
-
+    //Damir ende
+    //Start Stanley
     private class MapElement extends StackPane{
         private Text text = new Text("");
         public MapElement(double i, double j, double textSize, double col){
             Rectangle r = new Rectangle(i ,j);
-            r.setFill(null);
+            //farben einstellen
+            r.setFill(Color.WHITE);
             r.setStroke(Color.BLACK);
+            // textsize einstellent
             text.setFont(Font.font(textSize));
+            //alle vierecke leer
             setText("");
+            //text und Rectangle hinzufügen
             getChildren().addAll(r,text);
             setOnMouseClicked(event->{
                 if (!nextPlayer.equals("")){ // if "" the game has ended
@@ -92,7 +101,7 @@ public class Main extends Application {
                                 Map[(int) checkColumn(col)][(int) col].setText(nextPlayer); //do the step
                                 if (hasWinner()){
                                     printMsg(nextPlayer+ " has won! Start a new game with restart button!");
-                                    nextPlayer = "";
+                                    nextPlayer = ""; //davon wissen wir das dem Spiel am ende ist
                                 }else{
                                     if (nextPlayer.equals("X")) nextPlayer="O";
                                     else if(nextPlayer.equals("O")) nextPlayer = "X";
@@ -109,13 +118,17 @@ public class Main extends Application {
                 }else printMsg("The game is already over!");
             });
         }
-
+        //Ende Stanley
+        //Gudni Start
+        //Den Text einstellen
         public void setText(String s){
             text.setText(s);
         }
+        //Den Text Abfragen
         public String getText(){
             return text.getText();
         }
+        //Nach oben Msg printen
         public void printMsg(String s){ //set message at the top of the window
             msgLabel.setText(s);
         }
@@ -131,7 +144,7 @@ public class Main extends Application {
         public boolean hasWinner(){ // check winner
             for (int i = 0; i < 6; i++){
                 for (int j = 0; j < 7; j++){
-                    if (i < 3){
+                    if (i < 3){ // links -> rechts
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i+1][j].getText().equals(nextPlayer)
                                 && Map[i+2][j].getText().equals(nextPlayer)
@@ -139,19 +152,19 @@ public class Main extends Application {
                             return true;
                         }
                     }
-                    if (j < 4){
+                    if (j < 4){ //unten -> oben
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i][j+1].getText().equals(nextPlayer)
                                 && Map[i][j+2].getText().equals(nextPlayer)
                                 && Map[i][j+3].getText().equals(nextPlayer)) return true;
                     }
-                    if (j < 4 && i < 3){
+                    if (j < 4 && i < 3){ //diagonal links unten -> rects oben
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i+1][j+1].getText().equals(nextPlayer)
                                 && Map[i+2][j+2].getText().equals(nextPlayer)
                                 && Map[i+3][j+3].getText().equals(nextPlayer)) return true;
                     }
-                    if (j < 4 && i > 2){
+                    if (j < 4 && i > 2){ //diagonal rechts unten -> links oben
                         if (Map[i][j].getText().equals(nextPlayer)
                                 && Map[i-1][j+1].getText().equals(nextPlayer)
                                 && Map[i-2][j+2].getText().equals(nextPlayer)
